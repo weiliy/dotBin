@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+if [ $1 = 'init' ]; then
+  docker run --name pg-docker -e POSTGRES_PASSWORD=docker -d -p 5432:5432 -v $HOME/docker/volumes/postgres:/var/lib/postgresql/data  postgres
+fi
+
+if [ $1 = 'start' ]; then
+  docker start pg-docker
+fi
+
+if [ $1 = 'stop' ]; then
+  docker stop pg-docker
+fi
+
+if [ $1 = 'run' ]; then
+  shift
+  docker exec -it pg-docker $@
+fi
